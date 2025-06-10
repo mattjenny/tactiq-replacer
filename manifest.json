@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Tactiq Text Replacer",
+  "version": "1.0",
+  "description": "Replaces specific Tactiq text with random facts on Google Meet pages",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://meet.google.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["facts.txt"],
+      "matches": ["*://meet.google.com/*"]
+    }
+  ]
+}
