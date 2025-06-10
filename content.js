@@ -1,5 +1,4 @@
 let factsArray = [];
-const processedDivs = new WeakSet(); // Track which divs have been processed
 
 // Load facts from facts.txt
 async function loadFacts() {
@@ -29,21 +28,19 @@ function replaceText() {
   const divs = document.querySelectorAll('div');
   
   divs.forEach(div => {
-    // Skip if we've already processed this div
-    if (processedDivs.has(div)) {
+    const textContent = (div.textContent || div.innerText).trim();
+    
+    // Skip if we've already replaced this (starts with our factbot text)
+    if (textContent.startsWith('[FACTBOT]:')) {
       return;
     }
     
     // Check if this div starts with the Tactiq message (much more performant)
-    const textContent = (div.textContent || div.innerText).trim();
     if (textContent.startsWith('Hi everyone, this is an automated message to let you know my Tactiq extension:')) {
       
       // Replace the entire div content with our fact
       const replacementText = `[FACTBOT]: ${getRandomFact()}`;
       div.innerHTML = replacementText;
-      
-      // Mark this div as processed so we don't change it again
-      processedDivs.add(div);
     }
   });
 }
